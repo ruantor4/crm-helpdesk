@@ -2,13 +2,17 @@ package com.torquato.crm_helpdesk.entities;
 
 import java.util.List;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "tb_account")
 public class Account {
     
     @Id
@@ -17,11 +21,12 @@ public class Account {
     
     private String companyName;
     private String phone;
-    private String cpnj; // CNPJ ou CPF
+    private String cnpj; // CNPJ ou CPF
     
-     @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account")
     private List<User>users;
 
     @OneToMany(mappedBy = "account")
     private List<Contact> contacts;
+    
 }

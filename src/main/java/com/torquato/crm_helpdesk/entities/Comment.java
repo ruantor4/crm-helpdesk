@@ -2,14 +2,21 @@ package com.torquato.crm_helpdesk.entities;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "tb_comment")
 public class Comment {
 
     @Id
@@ -20,14 +27,14 @@ public class Comment {
     private String text;
 
     @ManyToOne
+    @JoinColumn(name = "created_by_id")
     private User createdBy;
 
-    @ManyToOne
-    private User resolvedBy; // Opcional — usado se o comentário for de resolução.
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @ManyToOne
+    @JoinColumn(name = "trouble_ticket_id")
     private TroubleTicket troubleTicket;
-
-    private LocalDateTime resolvedAt;
     
 }

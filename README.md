@@ -67,12 +67,25 @@ mysql -u root -p
 1. Clone este repositorio:
 
  ```bash
-git clone https://github.com/seuusuario/helpdesk-system.git
+git clone https://github.com/ruantor4/crm-helpdesk.git
 ```
 
 2.   Suba o banco de dados MySQL via Docker
     
 3.   Configure o `application.properties` ou `application.yml`
+
+   ```bash
+# Database config MySQL
+
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.url=jdbc:mysql://localhost:3306/helpdesk
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.show-sql: true
+```
+
     
 4.   Execute a aplicação com:
 

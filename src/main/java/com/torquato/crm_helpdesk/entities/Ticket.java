@@ -2,19 +2,27 @@ package com.torquato.crm_helpdesk.entities;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.torquato.crm_helpdesk.entities.enums.PriorityStatus;
 import com.torquato.crm_helpdesk.entities.enums.TicketStatus;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "tb_ticket")
 public class Ticket {
 
     @Id
@@ -22,8 +30,6 @@ public class Ticket {
     private Long id;
 
     private String title;
-
-    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -33,14 +39,23 @@ public class Ticket {
     private PriorityStatus priority;
 
     @ManyToOne
+    @JoinColumn(name = "create_by_id")
     private User createdBy;
 
     @ManyToOne
+    @JoinColumn(name = "assigned_to_user_id")
     private User assignedTo;
 
     @ManyToOne
+    @JoinColumn(name = "contact_id")
     private Contact contact;
 
+    @OneToOne(mappedBy = "ticket")
+    private TroubleTicket troubleTicket;
+    
+    @CreationTimestamp
     private LocalDateTime createdTime;
+
+    @UpdateTimestamp
     private LocalDateTime modifiedTime;
 }
